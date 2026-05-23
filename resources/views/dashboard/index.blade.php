@@ -1,8 +1,10 @@
 @extends('dashboard')
 
 @section('content')
-<div style="background-color: #111116; color: #ffffff; padding: 30px; font-family: 'Segoe UI', sans-serif; min-height: 100vh;">
+{{-- Juste un padding pour respirer, Flexbox s'occupe du reste ! --}}
+<div style="padding: 40px; background-color: #111116; color: #ffffff; font-family: 'Segoe UI', sans-serif; box-sizing: border-box;">
     
+    {{-- Section des 4 cartes de statistiques --}}
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
         <div style="background: #16161f; padding: 20px; border-radius: 6px; border: 1px solid #1f1f2e;">
             <small style="color: #888; text-transform: uppercase; font-size: 0.75rem; font-weight: bold;">Articles publiés</small>
@@ -26,8 +28,10 @@
         </div>
     </div>
 
+    {{-- Section inférieure : Tableau + Activités récentes --}}
     <div style="display: flex; gap: 25px;">
         
+        {{-- Tableau des articles récents --}}
         <div style="flex: 2; background: #16161f; padding: 25px; border-radius: 6px; border: 1px solid #1f1f2e;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 style="margin: 0; font-size: 1.1rem;">Articles récents</h3>
@@ -66,6 +70,7 @@
             </table>
         </div>
 
+        {{-- Bloc Activité Récente --}}
         <div style="flex: 1; background: #16161f; padding: 25px; border-radius: 6px; border: 1px solid #1f1f2e;">
             <h3 style="margin: 0 0 20px 0; font-size: 1.1rem;">Activité récente</h3>
             

@@ -10,9 +10,11 @@ use App\Http\Controllers\DashboardController;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [MainController::class, 'index'])->name('home');
-Route::get('/articles', [MainController::class, 'articles'])->name('articles.index');
-Route::get('/articles/{slug}', [MainController::class, 'article'])->name('articles.show');
-Route::get('/categories', [MainController::class, 'categories'])->name('categories.index');
+// Correction ici : 'articles' au lieu de 'articles.index'
+Route::get('/articles', [MainController::class, 'articles'])->name('articles');
+Route::get('/articles/{slug}', [MainController::class, 'article'])->name('article');
+// Correction ici : 'categories' au lieu de 'categories.index'
+Route::get('/categories', [MainController::class, 'categories'])->name('categories');
 Route::get('/about', [MainController::class, 'about'])->name('about');
 
 /*
@@ -22,7 +24,10 @@ Route::get('/about', [MainController::class, 'about'])->name('about');
 */
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::get('/articles', [DashboardController::class, 'articles'])->name('articles');
+    
+    // Correction ici : 'posts' au lieu de 'articles' pour matcher la sidebar du prof
+    Route::get('/articles', [DashboardController::class, 'articles'])->name('posts');
+    
     Route::get('/categories', [DashboardController::class, 'categories'])->name('categories');
     Route::get('/utilisateurs', [DashboardController::class, 'users'])->name('users');
     Route::get('/commentaires', [DashboardController::class, 'comments'])->name('comments');

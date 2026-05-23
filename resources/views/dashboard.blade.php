@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Dashboard')</title>
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <title>Admin Dashboard</title>
 </head>
-<body>
-    @include('components.dashboard.topbar')
+<body style="margin: 0; padding: 0; background-color: #111116;">
 
-    <div style="display: flex;">
-        @include('components.dashboard.sidebar')
+    {{-- CE CONTENEUR FLEX FORCE L'ALIGNEMENT CÔTE À CÔTE --}}
+    <div style="display: flex; min-height: 100vh; width: 100%;">
         
-        <main style="flex: 1; padding: 20px;">
+        {{-- 1. On inclut ta barre latérale fixe --}}
+        @include('components.dashboard.sidebar')
+
+        {{-- 2. La zone de contenu prend tout le reste de la place à droite --}}
+        <div style="flex: 1; min-width: 0; box-sizing: border-box;">
             @yield('content')
-        </main>
+        </div>
+
     </div>
+
 </body>
 </html>

@@ -32,9 +32,14 @@
         <div style="flex: 1; display: flex; justify-content: flex-end;">
             <div style="background: #111116; color: white; padding: 40px; width: 450px; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative;">
                 <span style="color: #e74c3c; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">À la une</span>
+                
+                {{-- Correction ici : Ajout du paramètre slug pour sécuriser la génération d'URL --}}
                 <h2 style="font-size: 1.8rem; margin: 20px 0 10px 0; font-family: Georgia, serif; font-weight: normal; line-height: 1.4;">
-                    Excepturi eligendi aliquid iste laboriosam
+                    <a href="{{ route('article', ['slug' => 'excepturi-eligendi-aliquid']) }}" style="color: white; text-decoration: none; transition: color 0.2s;">
+                        Excepturi eligendi aliquid iste laboriosam
+                    </a>
                 </h2>
+                
                 <p style="color: #888; font-size: 0.95rem; margin-bottom: 0;">
                     Le dernier article qui fait parler tout le monde...
                 </p>
