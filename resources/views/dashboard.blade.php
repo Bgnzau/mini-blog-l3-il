@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #111116;">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
 
-    {{-- CE CONTENEUR FLEX FORCE L'ALIGNEMENT CÔTE À CÔTE --}}
-    <div style="display: flex; min-height: 100vh; width: 100%;">
-        
-        {{-- 1. On inclut ta barre latérale fixe --}}
-        @include('components.dashboard.sidebar')
-
-        {{-- 2. La zone de contenu prend tout le reste de la place à droite --}}
-        <div style="flex: 1; min-width: 0; box-sizing: border-box;">
-            @yield('content')
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
         </div>
-
     </div>
-
-</body>
-</html>
+</x-app-layout>
