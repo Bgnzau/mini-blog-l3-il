@@ -29,6 +29,9 @@ php artisan key:generate
 # 6. Configurer la base de données dans le fichier .env
 # puis exécuter les migrations et les seeders
 php artisan migrate --seed
+
+# 7. Exécuter cette commande pour install Laravel Breeze
+composer require laravel/breeze --dev
 ```
 
 > Assurez-vous d'avoir un **PHP 8+**, **Composer** et **Laravel** compatibles installés sur votre machine avant de commencer.
