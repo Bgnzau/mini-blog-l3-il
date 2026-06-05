@@ -1,13 +1,9 @@
-{{--
-    EXERCICE — Questions 1 & 7 : Page À propos (route about)
---}}
 @extends('app')
 
 @section('title', 'À propos — Le Blog')
 
 @section('content')
-<!-- HERO -->
-    <div class="about-hero">
+<div class="about-hero">
         <div class="hero-left">
             <div class="page-tag">Notre histoire</div>
             <h1 class="page-title">Un blog fait avec <em>soin</em></h1>
@@ -15,16 +11,16 @@
                 curiosité et une attention profonde au monde qui nous entoure.</p>
             <div class="hero-stats">
                 <div>
-                    <div class="stat-num">50</div>
-                    <div class="stat-label">Articles</div>
+                    <div class="stat-num">{{ $totalArticles }}</div>
+                    <div class="stat-label">{{ Str::plural('Article', $totalArticles) }}</div>
                 </div>
                 <div>
-                    <div class="stat-num">305</div>
-                    <div class="stat-label">Lecteurs</div>
+                    <div class="stat-num">{{ $totalCategories }}</div>
+                    <div class="stat-label">{{ Str::plural('Catégorie', $totalCategories) }}</div>
                 </div>
                 <div>
-                    <div class="stat-num">250</div>
-                    <div class="stat-label">Commentaires</div>
+                    <div class="stat-num">{{ $totalComments }}</div>
+                    <div class="stat-label">{{ Str::plural('Commentaire', $totalComments) }}</div>
                 </div>
             </div>
         </div>
@@ -37,7 +33,6 @@
         </div>
     </div>
 
-    <!-- MISSION -->
     <div class="mission-section">
         <div>
             <h2 class="section-heading">Notre mission</h2>
@@ -46,8 +41,7 @@
             <p>Le Blog est né d'une conviction simple : à l'heure où l'information se fragmente en fils courts et en
                 notifications incessantes, il reste un espace pour la pensée longue, pour les textes qui prennent le
                 temps d'explorer, de nuancer, de revenir en arrière.</p>
-            <p>Nous couvrons cinq grandes thématiques — Vitae, Dignissimos, Optio, Aperiam et Tenetur — qui sont autant
-                de manières d'appréhender notre époque. Pas de hiérarchie entre elles : chacune éclaire l'autre.</p>
+            <p>Nous couvrons nos thématiques — qui sont autant de manières d'appréhender notre époque. Pas de hiérarchie entre elles : chacune éclaire l'autre.</p>
             <div class="highlight">
                 "La qualité d'un article se mesure moins à sa longueur qu'à sa capacité de transformer légèrement la
                 façon dont on regarde les choses."
@@ -59,7 +53,6 @@
         </div>
     </div>
 
-    <!-- VALUES -->
     <div class="values-section">
         <div class="values-header">
             <div class="values-tag">Ce qui nous guide</div>
@@ -105,65 +98,30 @@
         </div>
     </div>
 
-    <!-- TEAM -->
     <div class="team-section">
         <div class="team-header">
             <h2 class="team-title">L'équipe</h2>
-            <span class="team-count">Quelques auteurs réguliers</span>
+            <span class="team-count">{{ $totalUsers }} {{ Str::plural('auteur', $totalUsers) }} au total</span>
         </div>
+        
         <div class="team-grid">
-            <div class="team-card">
-                <div class="team-avatar" style="background:#C0392B">JL</div>
-                <div class="team-name">Jacklyn Lueilwitz</div>
-                <div class="team-role">Rédactrice en chef</div>
-                <div class="team-articles">3 articles publiés</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#2E86AB">DT</div>
-                <div class="team-name">Dr. Travon Kirlin</div>
-                <div class="team-role">Auteur — Aperiam</div>
-                <div class="team-articles">2 articles publiés</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#27AE60">AR</div>
-                <div class="team-name">Annetta Runolfsson</div>
-                <div class="team-role">Auteure — Vitae</div>
-                <div class="team-articles">2 articles publiés</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#8E44AD">DS</div>
-                <div class="team-name">Dr. Jenifer Sipes</div>
-                <div class="team-role">Auteure — Optio</div>
-                <div class="team-articles">2 articles publiés</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#E67E22">TL</div>
-                <div class="team-name">Mrs. Tia Lemke</div>
-                <div class="team-role">Auteure — Tenetur</div>
-                <div class="team-articles">2 articles publiés</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#1ABC9C">JW</div>
-                <div class="team-name">Juwan Wiegand</div>
-                <div class="team-role">Auteur — Dignissimos</div>
-                <div class="team-articles">1 article publié</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#2C3E50">OS</div>
-                <div class="team-name">Osborne Sanford</div>
-                <div class="team-role">Auteur — Optio</div>
-                <div class="team-articles">1 article publié</div>
-            </div>
-            <div class="team-card">
-                <div class="team-avatar" style="background:#7F8C8D">EM</div>
-                <div class="team-name">Esteban Murphy</div>
-                <div class="team-role">Auteur — Tenetur</div>
-                <div class="team-articles">1 article publié</div>
-            </div>
+            @forelse($users as $user)
+                <div class="team-card">
+                    <div class="team-avatar" style="background: #2E86AB;">
+                        {{ Str::upper(substr($user->name, 0, 2)) }}
+                    </div>
+                    <div class="team-name">{{ $user->name }}</div>
+                    <div class="team-role">Membre de l'équipe</div>
+                    <div class="team-articles">{{ $user->email }}</div>
+                </div>
+            @empty
+                <div class="no-data" style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #7f8c8d;">
+                    Aucun membre de l'équipe n'est enregistré pour le moment.
+                </div>
+            @endforelse
         </div>
     </div>
 
-    <!-- CONTACT CTA -->
     <div class="contact-section">
         <div>
             <h2 class="cta-title">Envie de <em>contribuer</em> ?</h2>

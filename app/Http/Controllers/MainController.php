@@ -2,39 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Category;
+use App\Models\Comment; 
+use App\Models\User;
+use Illuminate\Http\Request;
+
 class MainController extends Controller
 {
-    /** Route : GET / — nom : home — Vue : public/index.blade.php */
     public function index()
     {
-        return view('public.index');
+        $articles = Post::limit(3)->orderByDesc('id')->get();
+
+        $categories = Category::limit(5)->get();
+
+        $totalArticles = Post::count();
+        $totalCategories = Category::count();
+        $totalComments = Comment::count();
+
+        return view('public.index', compact('articles', 'categories', 'totalArticles', 'totalCategories', 'totalComments'));
     }
 
-    /** Route : GET /articles — nom : articles.index */
     public function articles()
     {
-        return view('public.articles');
+        $articles = Post::orderByDesc('id')->limit(10)->get();
+
+        $categories = Category::all();
+
+        $totalArticles = Post::count();
+        $totalCategories = Category::count();
+        $totalComments = Comment::count();
+
+        return view('public.articles', compact('articles', 'categories', 'totalArticles', 'totalCategories', 'totalComments'));
     }
 
-    /**
-     * Route : GET /articles/{slug} — nom : articles.show
-     
-     */
-    public function article(string $slug)
-    {
-       
-        return view('public.article', compact('slug'));
-    }
-
-    /** Route : GET /categories — nom : categories.index */
     public function categories()
-    {
-        return view('public.categories');
-    }
+  {
+    $categories = Category::withCount('posts')->get();
 
-    /** Route : GET /about — nom : about */
-    public function about()
-    {
-        return view('public.about');
-    }
+    $totalArticles = Post::count();
+    $totalCategories = $categories->count();
+    $totalComments = Comment::count();
+
+    return view('public.categories', compact('categories', 'totalArticles', 'totalCategories', 'totalComments'));
+  }
+
+  public function about()
+  {
+    // On récupère tous les utilisateurs pour la section Équipe
+    $users = User::all();
+
+    // On récupère toutes les statistiques réelles de la base de données
+    $totalArticles = Post::count();
+    $totalCategories = Category::count();
+    $totalUsers = User::count();
+    $totalComments = Comment::count();
+
+    // On renvoie vers la vue public.about avec toutes nos variables
+    return view('public.about', compact('users', 'totalArticles', 'totalCategories', 'totalUsers', 'totalComments'));
+  }
 }
+
+
+

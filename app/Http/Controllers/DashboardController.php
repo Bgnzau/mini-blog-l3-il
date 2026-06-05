@@ -2,42 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
-    /* Route : GET /dashboard — nom : dashboard.index */
+    /**
+     * Page d'accueil du Dashboard (Statistiques)
+     */
     public function index()
     {
-        return view('dashboard.index');
+        $totalArticles = Post::count();
+        $totalCategories = Category::count();
+        $totalComments = Comment::count();
+        $totalUsers = User::count();
+        
+        $recentPosts = Post::latest()->take(7)->get();
+
+        return view('dashboard.index', compact('totalArticles', 'totalCategories', 'totalComments', 'totalUsers', 'recentPosts'));
     }
 
-    /* Route : GET /dashboard/articles — nom : dashboard.articles */
+    /**
+     * Liste des articles dans le Dashboard
+     */
     public function articles()
     {
-        return view('dashboard.articles');
+        // On récupère tous les articles paginés par 10 avec leurs relations
+        $articles = Post::with(['category', 'user'])->latest()->paginate(10);
+        
+        return view('dashboard.articles', compact('articles'));
     }
 
-    /* Route : GET /dashboard/categories — nom : dashboard.categories */
+    /**
+     * Liste des catégories dans le Dashboard
+     */
     public function categories()
     {
-        return view('dashboard.categories');
+        $categories = Category::withCount('posts')->latest()->get();
+        return view('dashboard.categories', compact('categories'));
     }
 
-    /* Route : GET /dashboard/utilisateurs — nom : dashboard.users */
-    public function users()
-    {
-        return view('dashboard.users');
-    }
-
-    /* Route : GET /dashboard/commentaires — nom : dashboard.comments */
+    /**
+     * Liste des commentaires dans le Dashboard
+     */
     public function comments()
     {
-        return view('dashboard.comments');
-    }
-
-    /* Route : GET /dashboard/reglages — nom : dashboard.settings */
-    public function settings()
-    {
-        return view('dashboard.settings');
+        $comments = Comment::with(['post', 'user'])->latest()->paginate(15);
+        return view('dashboard.comments', compact('comments'));
     }
 }
